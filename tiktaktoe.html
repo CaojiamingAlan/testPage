@@ -1,0 +1,75 @@
+<html><head></head><body>
+	<canvas id="c" height="600" width="600"></canvas>
+</body>
+<script>
+
+var canvas = document.getElementById("c");
+var context = canvas.getContext("2d");
+var array = new Array();
+var i=0;
+var turn=0;
+var testImage = new Image();
+testImage.src="Snip20180107_1.png";
+for(i=0;i<9;i++){    
+    var a = Math.floor(i/3);
+    var b = i%3;
+    context.drawImage(testImage,200*a,200*b,200,200);   
+}
+
+self.drawGameBoard = function(){
+    var ctx = self.context;    
+    ctx.beginPath();
+    ctx.moveTo(200,0);
+    ctx.lineTo(200,600);
+    ctx.moveTo(400,0);
+    ctx.lineTo(400,600);
+    ctx.moveTo(0,200);
+    ctx.lineTo(600,200);
+    ctx.moveTo(0,400);
+    ctx.lineTo(600,400);
+    ctx.stroke();
+}
+
+self.drawSquare = function(x){
+    var ctx = self.context;
+    var a = Math.floor(x/3);
+    var b = x%3;
+    ctx.beginPath();
+    ctx.moveTo(10+200*b,10+200*a);
+    ctx.lineTo(190+200*b,190+200*a);
+    ctx.moveTo(10+200*b,190+200*a);
+    ctx.lineTo(190+200*b,10+200*a);
+    ctx.stroke();
+}
+self.drawCircle = function(x){
+    var ctx = self.context;
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    var a = Math.floor(x/3);
+    var b = x%3;
+    ctx.arc(100+200*b,100+200*a,90,0,2*Math.PI);
+    ctx.stroke();
+}
+
+canvas.onmousedown = function(event){  
+        var x=event.x;  
+        var y=event.y;  
+	var a = Math.floor(x/200);
+ 	var b = Math.floor(y/200)
+	if(turn==0){
+		drawSquare(a+3*b);
+		turn=1;
+	}
+	else{
+	drawCircle(a+b*3);
+		turn=0;
+	}
+};  
+
+drawGameBoard();
+
+
+</script>
+
+
+</html>
